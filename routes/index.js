@@ -10,6 +10,10 @@ const { customerRoutes } = require('./CustomerRoutes');
 const { adminRoutes } = require('./AdminRoutes');
 const { analyticsIndexRoutes } = require('./Analytics/analyticsIndexRoutes');
 
+indexRouter.get(`/`, (req, res, next) => {
+    return res?.status(200)?.send('Hii there');
+})
+
 
 indexRouter.use(`/admin`, adminRoutes);
 indexRouter.use(`/customer`, customerRoutes);
