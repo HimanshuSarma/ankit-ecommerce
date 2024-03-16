@@ -1,6 +1,9 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const joi = require('joi');
+const { otpGen } = require('otp-gen-agent');
+
+const { sendPhoneVerificationOTPHandler } = require('../../services/verification/phoneVerificationHandlers')
 
 const { responseErrorMessages } = require('../../staticData/responseErrorMessages')
 
@@ -8,8 +11,8 @@ const customerLoginController = {
     validation: async (req, res, next) => {
         try {
             const schema = joi.object({
-                email: joi.string().email({ tlds: { allow: false } }).required(),
-                password: joi.string().required()
+                phoneNumber: joi.string().length(10).required(),
+                // password: joi.string().required()
             });
 
             await schema.validateAsync(req?.body);
@@ -25,34 +28,47 @@ const customerLoginController = {
 
             const reqPayload = req?.body;
 
+            let customerInDB;
+
             const fetchedCustomerFromDB = await global?.models?.CUSTOMER?.findOne(
-                { email: reqPayload?.email }
+                { phoneNumber: reqPayload?.phoneNumber }
             );
 
-            const fetchedCustomerDoc = fetchedCustomerFromDB?.leanDoc();
+            let newCustomerInDB;
+            const newOtp = await otpGen();
 
-            const passwordMatch = await bcrypt.compare(reqPayload?.password, fetchedCustomerFromDB?.password);
-            if (passwordMatch) {
-                const token = jwt.sign(fetchedCustomerDoc, process.env.JWT_SECRET);
-
-                res?.status(200)?.json({
-                    payload: {
-                        item: {
-                            user: fetchedCustomerDoc,
-                            token
-                        }
-                    },
-                    message: responseErrorMessages?.SUCCESS
-                })
+            if (!fetchedCustomerFromDB?._id) {
+                const newCustomer = {
+                    ...reqPayload,
+                    phoneVerificationOtp: newOtp
+                };
+                newCustomerInDB = await global?.models?.CUSTOMER?.create(
+                    newCustomer
+                );
+                customerInDB = newCustomerInDB;
             } else {
-                res?.status(400).json({
-                    errorMessage: responseErrorMessages?.PASSWORD_DOESNOT_MATCH
+                customerInDB = fetchedCustomerFromDB;
+            }
+
+            console.log(customerInDB, 'customerInDB');
+
+
+            const otpRes = await sendPhoneVerificationOTPHandler({
+                phoneNumber: customerInDB?.phoneNumber,
+                newOtp
+            });
+
+            if (otpRes?.success) {
+                res?.status(200)?.json({
+                    message: responseErrorMessages?.OTP_SENT_SUCCESSFULLY
                 });
+            } else {
+                throw new Error(otpRes?.errorMessage);
             }
         } catch (err) {
             console.log(err, 'customer login error');
             res?.status(500).json({
-                errorMessage: err?.message
+                errorMessage: err?.message || err?.errorMessage
             });
         }
     }

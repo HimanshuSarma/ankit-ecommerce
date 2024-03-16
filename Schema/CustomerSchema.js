@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
 
 const CustomerSchema = new mongoose.Schema({
-    name: { type: mongoose.Schema.Types.String },
-    email: { type: mongoose.Schema.Types.String, required: true, unique: true },
+    // name: { type: mongoose.Schema.Types.String },
+    // email: { type: mongoose.Schema.Types.String, required: true, unique: true },
+    phoneNumber: { type: mongoose.Schema.Types.String, required: true, unique: true },
     phoneVerificationOtp: { type: mongoose.Schema.Types.String, default: null, required: true },
-    isPhoneNumberVerified: { type: mongoose.Schema.Types.Boolean, required: true, default: false },
-    password: { type: mongoose.Schema.Types.String, required: true },
+    // isPhoneNumberVerified: { type: mongoose.Schema.Types.Boolean, required: true, default: false },
+    // password: { type: mongoose.Schema.Types.String, required: true },
 }, { timestamps: true });
 
 

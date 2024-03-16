@@ -18,8 +18,6 @@ const sendPhoneVerificationOTPHandler = async ({
             }
         });
 
-        console.log(res, 'response');
-
         return {
             ...res,
             success: res?.return

@@ -8,16 +8,13 @@ const verifyPhoneNumberWithOtpController = {
     validation: async (req, res, next) => {
         try {
             const schema = joi.object({
-                email: joi.string().email({ tlds: { allow: false } }).required(),
+                phoneNumber: joi.string().length(10).required(),
                 phoneVerificationOtp: joi.string().required()
             });
     
             const reqPayload = req?.body;
     
-            await schema.validateAsync({
-                email: reqPayload?.email,
-                phoneVerificationOtp: reqPayload?.phoneVerificationOtp
-            });
+            await schema.validateAsync(reqPayload);
 
             next();
         } catch (err) {
@@ -32,18 +29,24 @@ const verifyPhoneNumberWithOtpController = {
 
             const reqPayload = req?.body;
 
-            const fetchedCustomerFromDB = await global?.models?.CUSTOMER?.findOneAndUpdate(
+            const fetchedCustomerFromDB = await global?.models?.CUSTOMER?.findOne(
                 { 
-                    email: reqPayload?.email,
+                    phoneNumber: reqPayload?.phoneNumber,
                     phoneVerificationOtp: reqPayload?.phoneVerificationOtp
-                },
-                {
-                    isPhoneNumberVerified: true
                 }
             );
 
+            const fetchedCustomerDoc = fetchedCustomerFromDB?.leanDoc();
+
             if (fetchedCustomerFromDB?._id) {
+                const token = jwt.sign(fetchedCustomerDoc, process.env.JWT_SECRET);
                 res?.status(200)?.json({
+                    payload: {
+                        item: {
+                            token,
+                            customerDoc: fetchedCustomerDoc
+                        }
+                    },
                     message: responseErrorMessages?.PHONE_OTP_VERIFICATION_SUCCESSFUL
                 });
             } else {
