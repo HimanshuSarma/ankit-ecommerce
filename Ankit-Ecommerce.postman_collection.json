@@ -1,0 +1,604 @@
+{
+	"info": {
+		"_postman_id": "2346b5eb-2812-43b4-9e55-6748def4daba",
+		"name": "Ankit-Ecommerce",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "category/create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWVkYzc1NTQ3OWUxNjFmNTU1MWZjMDUiLCJuYW1lIjoiSGltYW5zaHUiLCJlbWFpbCI6ImhpbWFuc2h1c2FybWEwNzRAZ21haWwuY29tIiwidXNlclR5cGUiOiJBZG1pbiIsImlhdCI6MTcxMDA5NTE5N30.g-Dg2G74Wy5uNCaIhCRYCHBU4jSw54tWWtBOd6qKrNA",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"c1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URI-DEV}}category/create",
+							"host": [
+								"{{URI-DEV}}category"
+							],
+							"path": [
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "category/",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWVkYzc1NTQ3OWUxNjFmNTU1MWZjMDUiLCJuYW1lIjoiSGltYW5zaHUiLCJlbWFpbCI6ImhpbWFuc2h1c2FybWEwNzRAZ21haWwuY29tIiwidXNlclR5cGUiOiJBZG1pbiIsImlhdCI6MTcxMDE1OTcxOH0.WblXpnTEy22oNOx6IggPy_4RE5TDbBItKpRbbzW6xbo",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{URI-DEV}}category/?categoryId=65edfb6c0b79639f5862acda",
+							"host": [
+								"{{URI-DEV}}category"
+							],
+							"path": [
+								""
+							],
+							"query": [
+								{
+									"key": "categoryId",
+									"value": "65edfb6c0b79639f5862acda"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "admin/create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWVkYzc1NTQ3OWUxNjFmNTU1MWZjMDUiLCJuYW1lIjoiSGltYW5zaHUiLCJlbWFpbCI6ImhpbWFuc2h1c2FybWEwNzRAZ21haWwuY29tIiwidXNlclR5cGUiOiJTdXBlcmFkbWluIiwiaWF0IjoxNzEwNDgxOTYxfQ.QSria86CounPQ969edMsMd7By0q-XgyBI-ADkqFfn8M",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Himanshu admin\",\r\n    \"email\": \"sweetiehimanshu@gmail.com\",\r\n    \"password\": \"password\",\r\n    \"userType\": \"Admin\",\r\n    \"adminEmail\": \"himanshusarma074@gmail.com\",\r\n    \"adminPassword\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URI-DEV}}admin/create",
+							"host": [
+								"{{URI-DEV}}admin"
+							],
+							"path": [
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "admin/login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"himanshusarma074@gmail.com\",\r\n    \"password\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URI-DEV}}admin/login",
+							"host": [
+								"{{URI-DEV}}admin"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "phoneNumberVerification",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"himanshusarma074@gmail.com\",\r\n    \"password\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URI-DEV}}admin/sendPhoneVerificiationOtp",
+							"host": [
+								"{{URI-DEV}}admin"
+							],
+							"path": [
+								"sendPhoneVerificiationOtp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "admin/verifyPhoneWithOtp",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"himanshusarma074@gmail.com\",\r\n    \"phoneVerificationOtp\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URI-DEV}}admin/verifyPhoneWithOtp",
+							"host": [
+								"{{URI-DEV}}admin"
+							],
+							"path": [
+								"verifyPhoneWithOtp"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product",
+			"item": [
+				{
+					"name": "product/create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWVkYzc1NTQ3OWUxNjFmNTU1MWZjMDUiLCJuYW1lIjoiSGltYW5zaHUiLCJlbWFpbCI6ImhpbWFuc2h1c2FybWEwNzRAZ21haWwuY29tIiwidXNlclR5cGUiOiJBZG1pbiIsImlhdCI6MTcxMDA5NTE5N30.g-Dg2G74Wy5uNCaIhCRYCHBU4jSw54tWWtBOd6qKrNA",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "p3",
+									"type": "default"
+								},
+								{
+									"key": "price",
+									"value": "100",
+									"type": "default"
+								},
+								{
+									"key": "categoryId",
+									"value": "65ef0a2843af8c3aab5ab548",
+									"type": "default"
+								},
+								{
+									"key": "img",
+									"type": "file",
+									"src": "/C:/Users/mahes/Downloads/images/profie_image.jpg"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URI-DEV}}product/create",
+							"host": [
+								"{{URI-DEV}}product"
+							],
+							"path": [
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "product/",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWVkYzc1NTQ3OWUxNjFmNTU1MWZjMDUiLCJuYW1lIjoiSGltYW5zaHUiLCJlbWFpbCI6ImhpbWFuc2h1c2FybWEwNzRAZ21haWwuY29tIiwidXNlclR5cGUiOiJBZG1pbiIsImlhdCI6MTcxMDA5NTE5N30.g-Dg2G74Wy5uNCaIhCRYCHBU4jSw54tWWtBOd6qKrNA",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{URI-DEV}}product?productId=65edfe2f3fa1462dcc2f423c",
+							"host": [
+								"{{URI-DEV}}product"
+							],
+							"query": [
+								{
+									"key": "Authorization",
+									"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWVkYzc1NTQ3OWUxNjFmNTU1MWZjMDUiLCJuYW1lIjoiSGltYW5zaHUiLCJlbWFpbCI6ImhpbWFuc2h1c2FybWEwNzRAZ21haWwuY29tIiwidXNlclR5cGUiOiJBZG1pbiIsImlhdCI6MTcxMDA5NTE5N30.g-Dg2G74Wy5uNCaIhCRYCHBU4jSw54tWWtBOd6qKrNA",
+									"disabled": true
+								},
+								{
+									"key": "productId",
+									"value": "65edfe2f3fa1462dcc2f423c"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "product/paginated?pageNo=1&limit=5",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWVkYzc1NTQ3OWUxNjFmNTU1MWZjMDUiLCJuYW1lIjoiSGltYW5zaHUiLCJlbWFpbCI6ImhpbWFuc2h1c2FybWEwNzRAZ21haWwuY29tIiwidXNlclR5cGUiOiJBZG1pbiIsImlhdCI6MTcxMDA5NTE5N30.g-Dg2G74Wy5uNCaIhCRYCHBU4jSw54tWWtBOd6qKrNA",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{URI-DEV}}product/paginated?pageNo=3&limit=4",
+							"host": [
+								"{{URI-DEV}}product"
+							],
+							"path": [
+								"paginated"
+							],
+							"query": [
+								{
+									"key": "pageNo",
+									"value": "3"
+								},
+								{
+									"key": "limit",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "product/",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWVkYzc1NTQ3OWUxNjFmNTU1MWZjMDUiLCJuYW1lIjoiSGltYW5zaHUiLCJlbWFpbCI6ImhpbWFuc2h1c2FybWEwNzRAZ21haWwuY29tIiwidXNlclR5cGUiOiJBZG1pbiIsImlhdCI6MTcxMDE1OTcxOH0.WblXpnTEy22oNOx6IggPy_4RE5TDbBItKpRbbzW6xbo",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{URI-DEV}}product/?productId",
+							"host": [
+								"{{URI-DEV}}product"
+							],
+							"path": [
+								""
+							],
+							"query": [
+								{
+									"key": "productId",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cart",
+			"item": [
+				{
+					"name": "cart/updateProducts",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWVlZDkzMTJmNjY5MmUwZjcxODdkMzYiLCJuYW1lIjoiSGltYW5zaHUgU2FybWEiLCJlbWFpbCI6ImhpbWFuc2h1c2FybWEwNzRAZ21haWwuY29tIiwiY3JlYXRlZEF0IjoiMjAyNC0wMy0xMVQxMDoxMzowNS41NzdaIiwidXBkYXRlZEF0IjoiMjAyNC0wMy0xMVQxMDoxMzowNS41NzdaIiwiX192IjowLCJpYXQiOjE3MTAxNTE5OTR9.RweH-A7Zf-tXhTGcl-QLpIcJ6dA7zQyRn5Ef8c5HIZM",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"products\": [\r\n        {\r\n            \"productId\": \"65ef0c15c18fc88bc986494c\",\r\n            \"count\": 10\r\n        }\r\n    ],\r\n    \"cartId\": \"65eed9312f6692e0f7187d38\",\r\n    \"action\": \"add\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URI-DEV}}cart/updateProducts",
+							"host": [
+								"{{URI-DEV}}cart"
+							],
+							"path": [
+								"updateProducts"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Customer",
+			"item": [
+				{
+					"name": "customer/signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Himanshu Sarma\",\r\n    \"email\": \"himanshusarma074@gmail.com\",\r\n    \"password\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URI-DEV}}customer/signup",
+							"host": [
+								"{{URI-DEV}}customer"
+							],
+							"path": [
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "customer/login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"himanshusarma074@gmail.com\",\r\n    \"password\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URI-DEV}}customer/login",
+							"host": [
+								"{{URI-DEV}}customer"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "customer/sendPhoneVerificiationOtp",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"himanshusarma074@gmail.com\",\r\n    \"password\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URI-DEV}}customer/sendPhoneVerificiationOtp",
+							"host": [
+								"{{URI-DEV}}customer"
+							],
+							"path": [
+								"sendPhoneVerificiationOtp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "customer/verifyPhoneWithOtp",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"himanshusarma074@gmail.com\",\r\n    \"phoneVerificationOtp\": \"935921\" \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URI-DEV}}customer/verifyPhoneWithOtp",
+							"host": [
+								"{{URI-DEV}}customer"
+							],
+							"path": [
+								"verifyPhoneWithOtp"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Analytics",
+			"item": [
+				{
+					"name": "analytics/userViewedProduct/increment",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWVlZDkzMTJmNjY5MmUwZjcxODdkMzYiLCJuYW1lIjoiSGltYW5zaHUgU2FybWEiLCJlbWFpbCI6ImhpbWFuc2h1c2FybWEwNzRAZ21haWwuY29tIiwiY3JlYXRlZEF0IjoiMjAyNC0wMy0xMVQxMDoxMzowNS41NzdaIiwidXBkYXRlZEF0IjoiMjAyNC0wMy0xMVQxMDoxMzowNS41NzdaIiwiX192IjowLCJpYXQiOjE3MTAxNTE5OTR9.RweH-A7Zf-tXhTGcl-QLpIcJ6dA7zQyRn5Ef8c5HIZM",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{URI-DEV}}analytics/userViewedProduct/increment?productId=65ef0c15c18fc88bc986494c",
+							"host": [
+								"{{URI-DEV}}analytics"
+							],
+							"path": [
+								"userViewedProduct",
+								"increment"
+							],
+							"query": [
+								{
+									"key": "productId",
+									"value": "65ef0c15c18fc88bc986494c"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Order",
+			"item": [
+				{
+					"name": "order/place-order",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWVlZDkzMTJmNjY5MmUwZjcxODdkMzYiLCJuYW1lIjoiSGltYW5zaHUgU2FybWEiLCJlbWFpbCI6ImhpbWFuc2h1c2FybWEwNzRAZ21haWwuY29tIiwiY3JlYXRlZEF0IjoiMjAyNC0wMy0xMVQxMDoxMzowNS41NzdaIiwidXBkYXRlZEF0IjoiMjAyNC0wMy0xMVQxMDoxMzowNS41NzdaIiwiX192IjowLCJpYXQiOjE3MTAzMTI0MzB9.rm4NzBEg-d1-Cbx9Eu_GgW_N8iEw1MztsdVgwDTl7s8",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{URI-DEV}}order/place-order",
+							"host": [
+								"{{URI-DEV}}order"
+							],
+							"path": [
+								"place-order"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Fast API",
+			"item": [
+				{
+					"name": "verifyPhone",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://www.fast2sms.com/dev/bulkV2?authorization=HZ2uvthzOY3KHpcIumCSKHbBGqqWaWUoje21xUxamDUULSmhgM44E97AcgA5&route=otp&variables_values=67567&flash=0&numbers=7002198426",
+							"protocol": "https",
+							"host": [
+								"www",
+								"fast2sms",
+								"com"
+							],
+							"path": [
+								"dev",
+								"bulkV2"
+							],
+							"query": [
+								{
+									"key": "authorization",
+									"value": "HZ2uvthzOY3KHpcIumCSKHbBGqqWaWUoje21xUxamDUULSmhgM44E97AcgA5"
+								},
+								{
+									"key": "route",
+									"value": "otp"
+								},
+								{
+									"key": "variables_values",
+									"value": "67567"
+								},
+								{
+									"key": "flash",
+									"value": "0"
+								},
+								{
+									"key": "numbers",
+									"value": "7002198426"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
