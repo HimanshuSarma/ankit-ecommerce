@@ -72,7 +72,7 @@ const updateProductsInCartController = {
                 updatedCartInDb = await global?.models?.CART?.findOneAndUpdate(
                     { 
                         _id: new mongoose.Types.ObjectId(cartId),
-                        userId: new mongoose.Types.ObjectId(req?.user?._id),
+                        userId: new mongoose.Types.ObjectId(user?._id),
                         "products.productId": {
                             $nin: products?.map(product => {
                                 return new mongoose.Types.ObjectId(product?.productId)
@@ -95,7 +95,7 @@ const updateProductsInCartController = {
                 updatedCartInDb = await global?.models?.CART?.findOneAndUpdate(
                     { 
                         _id: new mongoose.Types.ObjectId(cartId),
-                        userId: new mongoose.Types.ObjectId(req?.user?._id)
+                        userId: new mongoose.Types.ObjectId(user?._id)
                     },
                     {
                         $pull: {
@@ -115,7 +115,7 @@ const updateProductsInCartController = {
                 const fetchedCartFromDB = await global?.models?.CART?.findOne(
                     { 
                         _id: new mongoose.Types.ObjectId(cartId),
-                        userId: new mongoose.Types.ObjectId(req?.user?._id)
+                        userId: new mongoose.Types.ObjectId(user?._id)
                     }
                 )?.lean();
 
@@ -137,7 +137,7 @@ const updateProductsInCartController = {
                 updatedCartInDb = await global?.models?.CART.findOneAndUpdate(
                     { 
                         _id: new mongoose.Types.ObjectId(cartId),
-                        userId: new mongoose.Types.ObjectId(req?.user?._id)
+                        userId: new mongoose.Types.ObjectId(user?._id)
                     },
                     {
                         products: cartProducts
@@ -148,7 +148,7 @@ const updateProductsInCartController = {
                 updatedCartInDb = await global?.models?.CART.findOneAndUpdate(
                     { 
                         _id: new mongoose.Types.ObjectId(cartId),
-                        userId: new mongoose.Types.ObjectId(req?.user?._id)
+                        userId: new mongoose.Types.ObjectId(user?._id)
                     },
                     {
                         products: []

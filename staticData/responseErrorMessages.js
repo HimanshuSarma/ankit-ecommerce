@@ -9,7 +9,8 @@ const responseErrorMessages = {
     INVALID_REQUEST: `Invalid request`,
     PASSWORD_DOESNOT_MATCH: `Password doesn't match`,
 
-    SOME_ERROR_OCCURED: `Some error occured!`
+    SOME_ERROR_OCCURED: `Some error occured!`,
+    ERROR_UPLOADING_IMAGES: `Some error occured in uploading the images. Please try again!`
 };
 
 module.exports = {

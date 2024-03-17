@@ -29,11 +29,15 @@ const verifyPhoneNumberWithOtpController = {
 
             const reqPayload = req?.body;
 
-            const fetchedCustomerFromDB = await global?.models?.CUSTOMER?.findOne(
+            const fetchedCustomerFromDB = await global?.models?.CUSTOMER?.findOneAndUpdate(
                 { 
                     phoneNumber: reqPayload?.phoneNumber,
                     phoneVerificationOtp: reqPayload?.phoneVerificationOtp
-                }
+                },
+                {
+                    isPhoneNumberVerified: true
+                },
+                { new: true }
             );
 
             const fetchedCustomerDoc = fetchedCustomerFromDB?.leanDoc();

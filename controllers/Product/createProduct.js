@@ -9,6 +9,12 @@ const createProductController = {
             const schema = joi.object({
                 name: joi.string().required(),
                 price: joi.number().required(),
+                images: joi.array().items(
+                    joi.object({
+                        url: joi.string().min(1).required().regex(/https:\/\//),
+                        description: joi.string()
+                    })
+                ).required(),
                 categoryId: joi.string().min(12).required(),
                 createdBy: joi.string().min(12).required()
             });
@@ -18,6 +24,7 @@ const createProductController = {
             await schema.validateAsync({
                 name: reqPayload?.name,
                 price: reqPayload?.price,
+                images: reqPayload?.images,
                 categoryId: reqPayload?.categoryId,
                 createdBy: req?.admin?._id
             });
@@ -37,10 +44,9 @@ const createProductController = {
             const reqPayload = req?.body;
             const admin = req?.admin;
 
-            console.log(req?.files, req?.file, 'files');
-
             const newProduct = {
                 name: reqPayload?.name,
+                images: reqPayload?.images || [],
                 price: reqPayload?.price,
                 categoryId: reqPayload?.categoryId,
                 createdBy: admin?._id

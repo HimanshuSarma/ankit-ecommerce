@@ -5,7 +5,7 @@ const CustomerSchema = new mongoose.Schema({
     // email: { type: mongoose.Schema.Types.String, required: true, unique: true },
     phoneNumber: { type: mongoose.Schema.Types.String, required: true, unique: true },
     phoneVerificationOtp: { type: mongoose.Schema.Types.String, default: null, required: true },
-    // isPhoneNumberVerified: { type: mongoose.Schema.Types.Boolean, required: true, default: false },
+    isPhoneNumberVerified: { type: mongoose.Schema.Types.Boolean, required: true, default: false },
     // password: { type: mongoose.Schema.Types.String, required: true },
 }, { timestamps: true });
 

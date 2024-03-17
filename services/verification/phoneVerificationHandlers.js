@@ -20,7 +20,7 @@ const sendPhoneVerificationOTPHandler = async ({
 
         return {
             ...res,
-            success: res?.return
+            success: true
         };
     } catch (err) {
         console.log(err?.response?.data, 'sendPhoneVerificationOTPHandlerError');

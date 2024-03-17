@@ -7,7 +7,10 @@ const { getProductController } = require('../controllers/Product/getProduct');
 const { getPaginatedProductsController } = require('../controllers/Product/getPaginatedProducts');
 const { deleteProductController } = require('../controllers/Product/deleteProduct');
 const { checkPhoneNumberVerificationHandler } = require('../utils/Auth/checkPhoneNumberVerificationHandler');
-const { uploadImageMiddleware, uploadImage } = require('../utils/aws/s3Upload');
+const { multerUploadImageHandler } = require('../utils/images/multerUploadFilesHandler');
+const { uploadMultipleImagesFromBodyMiddleware } = require('../utils/images/uploadImageHandlers');
+
+const { responseErrorMessages } = require('../staticData/responseErrorMessages');
 
 const productRoutes = express.Router();
 
@@ -18,23 +21,15 @@ productRoutes.post(`/create`,
             req.admin = payload;
         });
     },
-    uploadImage?.single('img'),
     async (req, res, next) => {
-        // await uploadMediaFile({
-        //     content: 'ABC',
-        //     contentType: 'text/plain',
-        //     key: 'file'
-        // });
-        // console.log(req?.file, 'files');
-        // await uploadImage({
-        //     content: req?.files?.img,
-        //     contentType: 'text/plain',
-        //     key: 'testfile123image'
-        //     // file: req?.files?.img
-        // });
-
-        // uploadImage?.single('img')
-        uploadImageMiddleware(req, res, next);
+        const result = await uploadMultipleImagesFromBodyMiddleware(req, res, next);
+        if (result || !req?.body?.images) {
+            next();
+        } else {    
+            res?.status(500)?.json({
+                errorMessage: responseErrorMessages?.ERROR_UPLOADING_IMAGES
+            })
+        }
     },
     createProductController?.validation,
     createProductController?.handler
