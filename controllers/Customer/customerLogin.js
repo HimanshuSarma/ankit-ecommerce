@@ -33,7 +33,7 @@ const customerLoginController = {
             let customerInDB;
             let newCustomerInDB;
 
-            const fetchedCustomerFromDB = await global?.models?.CUSTOMER?.findOneAndUpdate(
+            const updatedCustomerFromDB = await global?.models?.CUSTOMER?.findOneAndUpdate(
                 { phoneNumber: reqPayload?.phoneNumber },
                 {
                     phoneVerificationOtp: newOtp
@@ -42,7 +42,7 @@ const customerLoginController = {
             );
 
 
-            if (!fetchedCustomerFromDB?._id) {
+            if (!updatedCustomerFromDB?._id) {
                 const newCustomer = {
                     ...reqPayload,
                     phoneVerificationOtp: newOtp
@@ -54,7 +54,7 @@ const customerLoginController = {
 
                 customerInDB = newCustomerInDB;
             } else {
-                customerInDB = fetchedCustomerFromDB;
+                customerInDB = updatedCustomerFromDB;
             }
 
             const otpRes = await sendPhoneVerificationOTPHandler({
