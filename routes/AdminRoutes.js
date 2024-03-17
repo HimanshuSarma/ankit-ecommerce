@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { verifyJWTMiddleware } = require('../middlewares/verifyJWTMiddleware');
+const { verifySuperadminMiddleware } = require('../middlewares/verifySuperadminMiddleware');
 
 const { adminLoginController } = require('../controllers/Admin/adminLogin');
 const { adminCreateController } = require('../controllers/Admin/adminCreate');
@@ -11,11 +11,7 @@ const adminRoutes = express.Router();
 
 // All POST routes start...
 adminRoutes.post(`/create`, 
-    (req, res, next) => { 
-        verifyJWTMiddleware(req, res, next, (payload) => {
-            req.admin = payload;
-        });
-    },
+    verifySuperadminMiddleware,
     adminCreateController?.validation,
     adminCreateController?.handler
 );

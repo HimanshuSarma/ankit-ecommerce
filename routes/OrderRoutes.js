@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { verifyJWTMiddleware } = require('../middlewares/verifyJWTMiddleware');
+const { verifyCustomerMiddleware } = require('../middlewares/verifyCustomerMiddleware');
 
 const { createOrderController } = require('../controllers/Order/createOrder');
 
@@ -10,11 +10,7 @@ const orderRoutes = express.Router();
 
 // All POST routes start...
 orderRoutes.post(`/place-order`, 
-    (req, res, next) => { 
-        verifyJWTMiddleware(req, res, next, (payload) => {
-            req.user = payload;
-        });
-    },
+    verifyCustomerMiddleware,
     checkPhoneNumberVerificationHandler,
     createOrderController?.handler
 );

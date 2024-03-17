@@ -2,7 +2,7 @@ const { verifyJWTTokenHandler } = require('../utils/Auth/verifyJWTTokenHandler')
 
 const { responseErrorMessages } = require('../staticData/responseErrorMessages');
 
-const verifyJWTMiddleware = (req, res, next, attachPayloadCb) => {
+const extractJWTTokenPayloadHandler = (req, attachPayloadCb) => {
     if (typeof req === 'string') {
     // If req is string, then, it means 'req' argument is the token itself,
     // and not the express Request object...
@@ -23,15 +23,12 @@ const verifyJWTMiddleware = (req, res, next, attachPayloadCb) => {
 
         if (payload) {
             attachPayloadCb ? attachPayloadCb(payload) : null;
-            next();
         } else {
-            res?.status(500)?.json({
-                errorMessage: responseErrorMessages?.INVALID_AUTH_TOKEN
-            })
+            attachPayloadCb ? attachPayloadCb(null) : null;
         }
     }
 };
 
 module.exports = {
-    verifyJWTMiddleware
+    extractJWTTokenPayloadHandler
 }

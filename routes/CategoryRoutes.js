@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { verifyJWTMiddleware } = require('../middlewares/verifyJWTMiddleware');
+const { verifyAllAdminMiddleware } = require('../middlewares/verifyAllAdminMiddleware');
 
 const { createCategoryController } = require('../controllers/Category/createCategory');
 const { deleteCategoryController } = require('../controllers/Category/deleteCategory');
@@ -8,23 +8,13 @@ const { deleteCategoryController } = require('../controllers/Category/deleteCate
 const categoryRoutes = express.Router();
 
 categoryRoutes.post(`/create`, 
-    (req, res, next) => { 
-        verifyJWTMiddleware(req, res, next, (payload) => {
-            req.admin = payload;
-            console.log(payload, 'payload');
-        });
-    },
+    verifyAllAdminMiddleware,
     createCategoryController?.validation,
     createCategoryController?.handler
 );
 
 categoryRoutes.delete(`/`, 
-    (req, res, next) => { 
-        verifyJWTMiddleware(req, res, next, (payload) => {
-            req.admin = payload;
-            console.log(payload, 'payload');
-        });
-    },
+    verifyAllAdminMiddleware,
     deleteCategoryController?.validation,
     deleteCategoryController?.handler
 );

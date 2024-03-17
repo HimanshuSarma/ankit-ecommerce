@@ -3,9 +3,9 @@ const jwt = require('jsonwebtoken');
 const joi = require('joi');
 const { otpGen } = require('otp-gen-agent');
 
-const { sendPhoneVerificationOTPHandler } = require('../../services/verification/phoneVerificationHandlers')
+const { sendPhoneVerificationOTPHandler } = require('../../services/verification/phoneVerificationHandlers');
 
-const { responseErrorMessages } = require('../../staticData/responseErrorMessages')
+const { responseErrorMessages } = require('../../staticData/responseErrorMessages');
 
 const customerLoginController = {
     validation: async (req, res, next) => {

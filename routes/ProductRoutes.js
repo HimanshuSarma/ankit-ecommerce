@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { verifyJWTMiddleware } = require('../middlewares/verifyJWTMiddleware');
+const { verifyAllAdminMiddleware } = require('../middlewares/verifyAllAdminMiddleware');
 
 const { createProductController } = require('../controllers/Product/createProduct');
 const { getProductController } = require('../controllers/Product/getProduct');
@@ -16,13 +16,9 @@ const productRoutes = express.Router();
 
 // All POST routes start...
 productRoutes.post(`/create`, 
-    (req, res, next) => { 
-        verifyJWTMiddleware(req, res, next, (payload) => {
-            req.admin = payload;
-        });
-    },
+    verifyAllAdminMiddleware,
     async (req, res, next) => {
-        const result = await uploadMultipleImagesFromBodyMiddleware(req, res, next);
+        const result = await uploadMultipleImagesFromBodyMiddleware(req);
         if (result || !req?.body?.images) {
             next();
         } else {    
@@ -37,23 +33,13 @@ productRoutes.post(`/create`,
 // All POST routes end...
 
 // All GET routes start...
-productRoutes.get(`/`, 
-    (req, res, next) => { 
-        verifyJWTMiddleware(req, res, next, (payload) => {
-            req.user = payload;
-        });
-    },
+productRoutes.get(`/`,
     checkPhoneNumberVerificationHandler,
     getProductController.validation,
     getProductController.handler
 );
 
-productRoutes.get(`/paginated`, 
-    (req, res, next) => { 
-        verifyJWTMiddleware(req, res, next, (payload) => {
-            req.user = payload;
-        });
-    },
+productRoutes.get(`/paginated`,
     checkPhoneNumberVerificationHandler,
     getPaginatedProductsController.validation,
     getPaginatedProductsController.handler
@@ -62,11 +48,7 @@ productRoutes.get(`/paginated`,
 
 // All DELETE routes start...
 productRoutes.delete(`/`, 
-    (req, res, next) => { 
-        verifyJWTMiddleware(req, res, next, (payload) => {
-            req.admin = payload;
-        });
-    },
+    verifyAllAdminMiddleware,
     deleteProductController.validation,
     deleteProductController.handler
 )

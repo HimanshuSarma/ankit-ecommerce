@@ -23,7 +23,7 @@ const uploadMultipleImagesMiddleware = async (req, res, next) => {
 };
 
 
-const uploadMultipleImagesFromBodyMiddleware = async (req, res, next) => {
+const uploadMultipleImagesFromBodyMiddleware = async (req) => {
     let areAllImagesUploaded = true;
 
     if (req?.body?.images) {

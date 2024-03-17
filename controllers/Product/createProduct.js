@@ -1,7 +1,7 @@
 const joi = require('joi');
 
 const { responseErrorMessages } = require('../../staticData/responseErrorMessages');
-const { default: mongoose } = require('mongoose');
+const mongoose = require('mongoose');
 
 const createProductController = {
     validation: async (req, res, next) => {
@@ -60,7 +60,7 @@ const createProductController = {
                 const newProductInDB = await global?.models?.PRODUCT?.create(newProduct);
 
                 if (newProductInDB?._id) {
-                    res?.status(200)?.json({
+                    return res?.status(200)?.json({
                         payload: {
                             item: newProductInDB
                         },

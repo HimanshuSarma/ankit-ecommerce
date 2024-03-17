@@ -8,10 +8,12 @@ const { cartRoutes } = require('./CartRoutes');
 const { orderRoutes } = require('./OrderRoutes');
 const { customerRoutes } = require('./CustomerRoutes');
 const { adminRoutes } = require('./AdminRoutes');
+const { deliveryPartnerRoutes } = require('./DeliveryPartnerRoutes');
 const { analyticsIndexRoutes } = require('./Analytics/analyticsIndexRoutes');
 
 
 indexRouter.use(`/admin`, adminRoutes);
+indexRouter.use(`/deliveryPartner`, deliveryPartnerRoutes);
 indexRouter.use(`/customer`, customerRoutes);
 indexRouter.use(`/category`, categoryRoutes);
 indexRouter.use(`/product`, productRoutes);
