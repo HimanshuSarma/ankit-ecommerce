@@ -28,30 +28,34 @@ const customerLoginController = {
 
             const reqPayload = req?.body;
 
-            let customerInDB;
+            const newOtp = await otpGen();
 
-            const fetchedCustomerFromDB = await global?.models?.CUSTOMER?.findOne(
-                { phoneNumber: reqPayload?.phoneNumber }
+            let customerInDB;
+            let newCustomerInDB;
+
+            const fetchedCustomerFromDB = await global?.models?.CUSTOMER?.findOneAndUpdate(
+                { phoneNumber: reqPayload?.phoneNumber },
+                {
+                    phoneVerificationOtp: newOtp
+                },
+                { new: true }
             );
 
-            let newCustomerInDB;
-            const newOtp = await otpGen();
 
             if (!fetchedCustomerFromDB?._id) {
                 const newCustomer = {
                     ...reqPayload,
                     phoneVerificationOtp: newOtp
                 };
+
                 newCustomerInDB = await global?.models?.CUSTOMER?.create(
                     newCustomer
                 );
+
                 customerInDB = newCustomerInDB;
             } else {
                 customerInDB = fetchedCustomerFromDB;
             }
-
-            console.log(customerInDB, 'customerInDB');
-
 
             const otpRes = await sendPhoneVerificationOTPHandler({
                 phoneNumber: customerInDB?.phoneNumber,
