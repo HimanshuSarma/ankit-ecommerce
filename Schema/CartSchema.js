@@ -7,7 +7,7 @@ const ProductInCartObj = {
 
 const CartModel = {
     products: [ProductInCartObj],
-    userId: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'customers', unique: true }
+    customerId: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'customers', unique: true }
 }
 
 const CartSchema = new mongoose.Schema(CartModel, { timestamps: true });

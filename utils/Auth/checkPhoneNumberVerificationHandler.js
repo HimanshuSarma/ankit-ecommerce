@@ -1,7 +1,7 @@
 const { responseErrorMessages } = require('../../staticData/responseErrorMessages');
 
 const checkPhoneNumberVerificationHandler = (req, res, next) => {
-    const user = req?.user || req?.admin;
+    const user = req?.customer || req?.admin || req?.superadmin;
 
     if (user?.isPhoneNumberVerified) {
         next();

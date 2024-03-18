@@ -9,6 +9,7 @@ const ProductSchema = new mongoose.Schema({
         }
     ],
     price: { type: mongoose.Schema.Types.Number, required: true },
+    stock: { type: mongoose.Schema.Types.Number, min: 1, required: true },
     categoryId: { type: mongoose.Schema.Types.ObjectId, required: true },
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'admins', required: true }
 }, { timestamps: true });

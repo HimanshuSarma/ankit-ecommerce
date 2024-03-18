@@ -6,6 +6,7 @@ const CustomerSchema = new mongoose.Schema({
     phoneNumber: { type: mongoose.Schema.Types.String, required: true, unique: true },
     phoneVerificationOtp: { type: mongoose.Schema.Types.String, default: null, required: true },
     isPhoneNumberVerified: { type: mongoose.Schema.Types.Boolean, required: true, default: false },
+    userType: { type: mongoose.Schema.Types.String, required: true, default: 'customer', enum: ['customer'] }
     // password: { type: mongoose.Schema.Types.String, required: true },
 }, { timestamps: true });
 

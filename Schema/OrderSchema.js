@@ -17,7 +17,7 @@ const OrderSchema = new mongoose.Schema({
         enum: ['error', 'pending', 'placed', 'accepted', 'dispatched', 'out for delivery', 'delivered'] 
     },
     description: { type: mongoose.Schema.Types.String, default: '' },
-    orderId: { type: mongoose.Schema.Types.String, default: '' }
+    orderPaymentId: { type: mongoose.Schema.Types.String, default: '' }
 }, { timestamps: true });
 
 module.exports = {

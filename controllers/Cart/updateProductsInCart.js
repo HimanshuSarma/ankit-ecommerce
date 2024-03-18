@@ -63,16 +63,36 @@ const updateProductsInCartController = {
             const products = req?.body?.products;
             const action = req?.body?.action;
 
-            const user = req?.user;
+            const customer = req?.customer;
 
             let updatedCartInDb;
 
             if (action === 'add') {
 
+                const fetchedToBeAddedProducts = await global?.models?.PRODUCT?.find(
+                    {
+                        _id: {
+                            $in: products?.map(product => {
+                                return new mongoose.Types.ObjectId(product?.productId)
+                            })
+                        },
+                    }
+                );  
+
+                for (let i = 0; i < fetchedToBeAddedProducts?.length; i++) {
+                    for (let j = 0; j < products?.length; j++) {
+                        if (fetchedToBeAddedProducts?.[i]?._id?.equals(products?.[j]?.productId)) {
+                            if (fetchedToBeAddedProducts?.[i]?.stock < products?.[i]?.count) {
+                                throw new Error(`ProductId(${products?.[i]?.productId}) count cannot be greater than the stock!`);
+                            }
+                        } 
+                    }
+                }
+
                 updatedCartInDb = await global?.models?.CART?.findOneAndUpdate(
                     { 
                         _id: new mongoose.Types.ObjectId(cartId),
-                        userId: new mongoose.Types.ObjectId(user?._id),
+                        customerId: new mongoose.Types.ObjectId(customer?._id),
                         "products.productId": {
                             $nin: products?.map(product => {
                                 return new mongoose.Types.ObjectId(product?.productId)
@@ -95,7 +115,7 @@ const updateProductsInCartController = {
                 updatedCartInDb = await global?.models?.CART?.findOneAndUpdate(
                     { 
                         _id: new mongoose.Types.ObjectId(cartId),
-                        userId: new mongoose.Types.ObjectId(user?._id)
+                        customerId: new mongoose.Types.ObjectId(customer?._id)
                     },
                     {
                         $pull: {
@@ -112,10 +132,30 @@ const updateProductsInCartController = {
                 );
             } else if (action === 'update') {
 
+                const fetchedToBeAddedProducts = await global?.models?.PRODUCT?.find(
+                    {
+                        _id: {
+                            $in: products?.map(product => {
+                                return new mongoose.Types.ObjectId(product?.productId)
+                            })
+                        },
+                    }
+                );  
+
+                for (let i = 0; i < fetchedToBeAddedProducts?.length; i++) {
+                    for (let j = 0; j < products?.length; j++) {
+                        if (fetchedToBeAddedProducts?.[i]?._id?.equals(products?.[j]?.productId)) {
+                            if (fetchedToBeAddedProducts?.[i]?.stock < products?.[i]?.count) {
+                                throw new Error(`ProductId(${products?.[i]?.productId}) count cannot be greater than the stock!`);
+                            }
+                        } 
+                    }
+                }
+
                 const fetchedCartFromDB = await global?.models?.CART?.findOne(
                     { 
                         _id: new mongoose.Types.ObjectId(cartId),
-                        userId: new mongoose.Types.ObjectId(user?._id)
+                        customerId: new mongoose.Types.ObjectId(customer?._id)
                     }
                 )?.lean();
 
@@ -137,7 +177,7 @@ const updateProductsInCartController = {
                 updatedCartInDb = await global?.models?.CART.findOneAndUpdate(
                     { 
                         _id: new mongoose.Types.ObjectId(cartId),
-                        userId: new mongoose.Types.ObjectId(user?._id)
+                        customerId: new mongoose.Types.ObjectId(customer?._id)
                     },
                     {
                         products: cartProducts
@@ -148,7 +188,7 @@ const updateProductsInCartController = {
                 updatedCartInDb = await global?.models?.CART.findOneAndUpdate(
                     { 
                         _id: new mongoose.Types.ObjectId(cartId),
-                        userId: new mongoose.Types.ObjectId(user?._id)
+                        customerId: new mongoose.Types.ObjectId(customer?._id)
                     },
                     {
                         products: []

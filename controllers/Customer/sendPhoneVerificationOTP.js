@@ -11,16 +11,12 @@ const sendPhoneVerificationController = {
     validation: async (req, res, next) => {
         try {
             const schema = joi.object({
-                email: joi.string().email({ tlds: { allow: false } }).required(),
-                password: joi.string().required()
+                phoneNumber: joi.string().length(10).required()
             });
     
             const reqPayload = req?.body;
     
-            await schema.validateAsync({
-                email: reqPayload?.email,
-                password: reqPayload?.password
-            });
+            await schema.validateAsync(reqPayload);
 
             next();
         } catch (err) {
@@ -34,49 +30,36 @@ const sendPhoneVerificationController = {
         try {
 
             const reqPayload = req?.body;
+            const newOtp = await otpGen();
 
-            const fetchedCustomerFromDB = await global?.models?.CUSTOMER?.findOne(
-                { email: reqPayload?.email }
+            const updatedCustomerPhoneVerificationOtp = await global?.models?.CUSTOMER?.findOneAndUpdate(
+                { 
+                    email: reqPayload?.email,
+                },
+                {
+                    phoneVerificationOtp: newOtp
+                },
+                { new: true }
             );
 
-            if (fetchedCustomerFromDB?._id) {
-                const passwordMatch = await bcrypt.compare(reqPayload?.password, fetchedCustomerFromDB?.password);
-                if (passwordMatch) {
-                    const newOtp = await otpGen();
+            if (updatedCustomerPhoneVerificationOtp?._id) {
 
-                    const updatedCustomerPhoneVerificationOtp = await global?.models?.CUSTOMER?.findOneAndUpdate(
-                        { 
-                            email: reqPayload?.email,
-                        },
-                        {
-                            phoneVerificationOtp: newOtp
-                        },
-                        { new: true }
-                    );
+                if (updatedCustomerPhoneVerificationOtp?._id && updatedCustomerPhoneVerificationOtp?.phoneVerificationOtp === newOtp) {
+                    const otpRes = await sendPhoneVerificationOTPHandler({
+                        phoneNumber: updatedCustomerPhoneVerificationOtp?.phoneNumber,
+                        newOtp
+                    });
 
-                    if (updatedCustomerPhoneVerificationOtp?._id && updatedCustomerPhoneVerificationOtp?.phoneVerificationOtp === newOtp) {
-                        const otpRes = await sendPhoneVerificationOTPHandler({
-                            phoneNumber: fetchedCustomerFromDB?.phoneNumber,
-                            newOtp
+                    if (otpRes?.success) {
+                        res?.status(200)?.json({
+                            message: responseErrorMessages?.OTP_SENT_SUCCESSFULLY
                         });
-    
-                        if (otpRes?.success) {
-                            res?.status(200)?.json({
-                                message: responseErrorMessages?.OTP_SENT_SUCCESSFULLY
-                            });
-                        } else {
-                            throw new Error(otpRes?.errorMessage);
-                        }
                     } else {
-                        res?.status(500).json({
-                            errorMessage: `An error occured in generating the otp!`
-                        });
+                        throw new Error(otpRes?.errorMessage);
                     }
-
-                    
                 } else {
-                    res?.status(400).json({
-                        errorMessage: responseErrorMessages?.PASSWORD_DOESNOT_MATCH
+                    res?.status(500).json({
+                        errorMessage: `An error occured in generating the otp!`
                     });
                 }
             } else {

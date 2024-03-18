@@ -15,6 +15,7 @@ const createProductController = {
                         description: joi.string()
                     })
                 ).required(),
+                stock: joi.number().min(1).required(),
                 categoryId: joi.string().min(12).required(),
                 createdBy: joi.string().min(12).required()
             });
@@ -25,6 +26,7 @@ const createProductController = {
                 name: reqPayload?.name,
                 price: reqPayload?.price,
                 images: reqPayload?.images,
+                stock: reqPayload?.stock,
                 categoryId: reqPayload?.categoryId,
                 createdBy: req?.admin?._id
             });
@@ -49,6 +51,7 @@ const createProductController = {
                 images: reqPayload?.images || [],
                 price: reqPayload?.price,
                 categoryId: reqPayload?.categoryId,
+                stock: reqPayload?.stock,
                 createdBy: admin?._id
             };
 

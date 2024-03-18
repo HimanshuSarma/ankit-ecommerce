@@ -28,8 +28,8 @@ customerRoutes.put(`/verifyPhoneWithOtp`,
 
 // All GET routes start...
 customerRoutes.get(`/sendPhoneVerificiationOtp`, 
-    verifyPhoneNumberWithOtpController?.validation,
-    verifyPhoneNumberWithOtpController?.handler
+    sendPhoneVerificationController?.validation,
+    sendPhoneVerificationController?.handler
 );
 // All GET routes end...
 

@@ -34,13 +34,17 @@ const createOrderController = {
     handler: async (req, res, next) => {
         try {
 
-            const user = req?.user;
+            const customer = req?.customer;
 
             const fetchedCartOfUserInDB = await global?.models?.CART?.findOne(
-                { userId: new mongoose.Types.ObjectId(user?._id) }
+                { customerId: new mongoose.Types.ObjectId(customer?._id) }
             )
             ?.populate('products.productId')
             ?.lean();
+
+            if (fetchedCartOfUserInDB?.products?.length === 0) {
+                throw new Error(`No products in the cart!`);
+            }
 
             let totalCost = 0;
 
@@ -65,12 +69,12 @@ const createOrderController = {
 
             console.log(newOrder, 'newOrder');
 
-            const newProductInDB = await global?.models?.ORDER?.create(newOrder);
+            const newOrderInDB = await global?.models?.ORDER?.create(newOrder);
 
-            if (newProductInDB?._id) {
+            if (newOrderInDB?._id) {
                 res?.status(200)?.json({
                     payload: {
-                        item: newProductInDB
+                        item: newOrderInDB
                     },
                     message: responseErrorMessages?.SUCCESS
                 })
