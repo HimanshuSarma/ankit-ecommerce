@@ -47,7 +47,7 @@ const adminLoginController = {
 
                     res?.status(200)?.json({
                         payload: {
-                            item: token
+                            token
                         },
                         message: responseErrorMessages?.SUCCESS
                     })

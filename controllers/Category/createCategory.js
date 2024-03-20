@@ -42,7 +42,7 @@ const createCategoryController = {
             if (newCategoryInDB?._id) {
                 res?.status(200)?.json({
                     payload: {
-                        item: newCategoryInDB
+                        category: newCategoryInDB
                     },
                     message: responseErrorMessages?.SUCCESS
                 })

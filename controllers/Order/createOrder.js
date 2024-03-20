@@ -74,7 +74,7 @@ const createOrderController = {
             if (newOrderInDB?._id) {
                 res?.status(200)?.json({
                     payload: {
-                        item: newOrderInDB
+                        order: newOrderInDB
                     },
                     message: responseErrorMessages?.SUCCESS
                 })

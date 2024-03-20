@@ -40,7 +40,7 @@ const getProductController = {
             if (fetchedProductInDB?._id) {
                 res?.status(200)?.json({
                     payload: {
-                        item: fetchedProductInDB
+                        product: fetchedProductInDB
                     },
                     message: responseErrorMessages?.SUCCESS
                 })

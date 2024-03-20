@@ -67,7 +67,7 @@ const adminCreateController = {
                     if (newAdminInDB?._id) {
                         res?.status(200)?.json({
                             payload: {
-                                item: newAdminInDB
+                                admin: newAdminInDB
                             },
                             message: responseErrorMessages?.SUCCESS
                         }) 

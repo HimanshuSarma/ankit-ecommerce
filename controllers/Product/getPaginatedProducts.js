@@ -36,12 +36,12 @@ const getPaginatedProductsController = {
             const pageNo = req?.query?.pageNo;
             const limit = req?.query?.limit;
 
-            const fetchedResourceInDB = await global?.models?.PRODUCT.find()?.skip((pageNo - 1) * limit)?.limit(limit);
+            const fetchedProductsFromDB = await global?.models?.PRODUCT.find()?.skip((pageNo - 1) * limit)?.limit(limit);
 
-            if (fetchedResourceInDB) {
+            if (fetchedProductsFromDB) {
                 res?.status(200)?.json({
                     payload: {
-                        item: fetchedResourceInDB
+                        products: fetchedProductsFromDB
                     },
                     message: responseErrorMessages?.SUCCESS
                 })

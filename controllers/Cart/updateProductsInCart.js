@@ -200,7 +200,7 @@ const updateProductsInCartController = {
             if (updatedCartInDb) {
                 res?.status(200)?.json({
                     payload: {
-                        item: updatedCartInDb
+                        cart: updatedCartInDb
                     },
                     message: responseErrorMessages?.SUCCESS
                 })

@@ -12,7 +12,7 @@ const fetchCartByCustomerIdController = {
 
             res?.status(200)?.json({
                 payload: {
-                    main: fetchedCartFromDB
+                    cart: fetchedCartFromDB
                 }
             });
         } catch (err) {

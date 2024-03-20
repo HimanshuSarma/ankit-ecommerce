@@ -37,7 +37,7 @@ const placeOrderController = {
             if (placedOrderInDB?._id) {
                 res?.status(200)?.json({
                     payload: {
-                        item: placedOrderInDB
+                        order: placedOrderInDB
                     }
                 });
             } else {

@@ -74,7 +74,7 @@ const customerSignupController = {
                 await dbSession?.commitTransaction();
                 res?.status(200)?.json({
                     payload: {
-                        item: newCustomerInDB
+                        customer: newCustomerInDB
                     },
                     message: responseErrorMessages?.SUCCESS
                 })

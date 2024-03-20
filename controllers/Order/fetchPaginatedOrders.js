@@ -33,7 +33,7 @@ const fetchPaginatedOrdersController = {
 
             res?.status(200)?.json({
                 payload: {
-                    items: fetchedPaginatedOrdersInDB
+                    orders: fetchedPaginatedOrdersInDB
                 }
             })
         } catch (err) {

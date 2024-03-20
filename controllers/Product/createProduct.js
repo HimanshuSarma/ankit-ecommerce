@@ -65,7 +65,7 @@ const createProductController = {
                 if (newProductInDB?._id) {
                     return res?.status(200)?.json({
                         payload: {
-                            item: newProductInDB
+                            product: newProductInDB
                         },
                         message: responseErrorMessages?.SUCCESS
                     })

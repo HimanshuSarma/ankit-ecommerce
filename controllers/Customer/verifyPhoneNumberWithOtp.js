@@ -46,10 +46,8 @@ const verifyPhoneNumberWithOtpController = {
                 const token = jwt.sign(fetchedCustomerDoc, process.env.JWT_SECRET);
                 res?.status(200)?.json({
                     payload: {
-                        item: {
-                            token,
-                            customerDoc: fetchedCustomerDoc
-                        }
+                        token,
+                        customer: fetchedCustomerDoc
                     },
                     message: responseErrorMessages?.PHONE_OTP_VERIFICATION_SUCCESSFUL
                 });
