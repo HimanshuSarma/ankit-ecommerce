@@ -8,4 +8,4 @@ analyticsIndexRoutes.use(`/userViewedProduct`, analyticsUserViewedProductRoutes)
 
 module.exports = {
     analyticsIndexRoutes
-}
+};
