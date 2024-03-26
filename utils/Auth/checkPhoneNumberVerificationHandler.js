@@ -1,9 +1,13 @@
+const { verifyJWTTokenHandler } = require('./verifyJWTTokenHandler');
+const { extractJWTTokenPayloadHandler } = require('../../middlewares/extractJWTTokenPayloadHandler')
+
 const { responseErrorMessages } = require('../../staticData/responseErrorMessages');
 
 const checkPhoneNumberVerificationHandler = (req, res, next) => {
-    const user = req?.customer || req?.admin || req?.superadmin;
 
-    if (user?.isPhoneNumberVerified) {
+    const jwtPayload = extractJWTTokenPayloadHandler(req);
+
+    if (jwtPayload?.isPhoneNumberVerified) {
         next();
     } else {
         res?.status(401)?.json({

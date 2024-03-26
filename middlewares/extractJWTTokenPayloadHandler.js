@@ -2,7 +2,7 @@ const { verifyJWTTokenHandler } = require('../utils/Auth/verifyJWTTokenHandler')
 
 const { responseErrorMessages } = require('../staticData/responseErrorMessages');
 
-const extractJWTTokenPayloadHandler = (req, attachPayloadCb) => {
+const extractJWTTokenPayloadHandler = (req) => {
     if (typeof req === 'string') {
     // If req is string, then, it means 'req' argument is the token itself,
     // and not the express Request object...
@@ -21,11 +21,7 @@ const extractJWTTokenPayloadHandler = (req, attachPayloadCb) => {
             token
         });
 
-        if (payload) {
-            attachPayloadCb ? attachPayloadCb(payload) : null;
-        } else {
-            attachPayloadCb ? attachPayloadCb(null) : null;
-        }
+        return payload;
     }
 };
 

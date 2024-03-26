@@ -5,6 +5,10 @@ const CategorySchema = new mongoose.Schema({
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'admins', required: true }
 }, { timestamps: true });
 
+CategorySchema.methods.leanDoc = function () {
+    const doc = this._doc;
+    return doc;
+};
 
 module.exports = {
     CategorySchema,

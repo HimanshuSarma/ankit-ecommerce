@@ -3,16 +3,16 @@ const { extractJWTTokenPayloadHandler } = require('./extractJWTTokenPayloadHandl
 const { responseErrorMessages } = require('../staticData/responseErrorMessages');
 
 const verifyAllAdminMiddleware = (req, res, next) => {
-    extractJWTTokenPayloadHandler(req, (payload) => {
-        if (payload?.userType === 'Superadmin' || payload?.userType === 'Admin') {
-            req.admin = payload;
-            next();
-        } else {
-            res?.status(400)?.json({
-                errorMessage: responseErrorMessages?.ONLY_ADMIN_ACCESS
-            });
-        }
-    });
+    const jwtTokenPayload = extractJWTTokenPayloadHandler(req);
+
+    if (jwtTokenPayload?.userType === 'Superadmin' || jwtTokenPayload?.userType === 'Admin') {
+        req.admin = jwtTokenPayload;
+        next();
+    } else {
+        res?.status(400)?.json({
+            errorMessage: responseErrorMessages?.ONLY_ADMIN_ACCESS
+        });
+    }
 };
 
 module.exports = {

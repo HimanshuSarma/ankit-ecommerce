@@ -3,13 +3,13 @@ const joi = require('joi');
 
 const { responseErrorMessages } = require('../../staticData/responseErrorMessages');
 
-const getPaginatedProductsController = {
+const getPaginatedCategoriesController = {
     validation: async (req, res, next) => {
         try {
             const schema = joi.object({
                 pageNo: joi.number().required(),
                 limit: joi.number().required(),
-                searchQuery: joi.string()
+                searchQuery: req?.query?.searchQuery
             });
 
             const params = {
@@ -25,7 +25,7 @@ const getPaginatedProductsController = {
             }
             next();
         } catch (err) {
-            console.log(err, 'getPaginatedProductsValidationError');
+            console.log(err, 'getPaginatedCategoriesValidationError');
             res?.status(500).json({
                 errorMessage: err?.message
             });
@@ -38,9 +38,7 @@ const getPaginatedProductsController = {
             const limit = req?.query?.limit;
             const searchQuery = req?.query?.searchQuery;
 
-            console.log(searchQuery, 'searchQuery');
-
-            const fetchedProductsFromDB = await global?.models?.PRODUCT.find(
+            const fetchedCategoriesFromDB = await global?.models?.CATEGORY?.find(
                 {
                     name: {
                         $regex: searchQuery || ''
@@ -48,10 +46,10 @@ const getPaginatedProductsController = {
                 }
             )?.skip((pageNo - 1) * limit)?.limit(limit);
 
-            if (fetchedProductsFromDB) {
+            if (fetchedCategoriesFromDB) {
                 res?.status(200)?.json({
                     payload: {
-                        products: fetchedProductsFromDB
+                        categories: fetchedCategoriesFromDB
                     },
                     message: responseErrorMessages?.SUCCESS
                 })
@@ -68,5 +66,5 @@ const getPaginatedProductsController = {
 };
 
 module.exports = {
-    getPaginatedProductsController
+    getPaginatedCategoriesController
 }

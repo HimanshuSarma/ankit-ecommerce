@@ -14,6 +14,11 @@ const ProductSchema = new mongoose.Schema({
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'admins', required: true }
 }, { timestamps: true });
 
+ProductSchema.methods.responseDoc = function () {
+    const doc = this._doc;
+    return doc;
+};
+
 module.exports = {
     ProductSchema,
 }

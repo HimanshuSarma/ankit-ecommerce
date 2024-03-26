@@ -3,6 +3,7 @@ const express = require('express');
 const { verifyAllAdminMiddleware } = require('../middlewares/verifyAllAdminMiddleware');
 
 const { createProductController } = require('../controllers/Product/createProduct');
+const { updateProductController } = require('../controllers/Product/updateProduct');
 const { getProductController } = require('../controllers/Product/getProduct');
 const { getPaginatedProductsController } = require('../controllers/Product/getPaginatedProducts');
 const { deleteProductController } = require('../controllers/Product/deleteProduct');
@@ -31,6 +32,24 @@ productRoutes.post(`/create`,
     createProductController?.handler
 );
 // All POST routes end...
+
+// All PUT routes start...
+productRoutes.put(`/`, 
+    verifyAllAdminMiddleware,
+    async (req, res, next) => {
+        const result = await uploadMultipleImagesFromBodyMiddleware(req);
+        if (result || !req?.body?.images) {
+            next();
+        } else {    
+            res?.status(500)?.json({
+                errorMessage: responseErrorMessages?.ERROR_UPLOADING_IMAGES
+            })
+        }
+    },
+    updateProductController?.validation,
+    updateProductController?.handler
+);
+// All PUT routes end...
 
 // All GET routes start...
 productRoutes.get(`/`,
