@@ -11,6 +11,7 @@ const updateProductController = {
                 price: joi.number(),
                 images: joi.array().items(
                     joi.object({
+                        _id: joi.string().min(12),
                         url: joi.string().min(1).required().regex(/https:\/\//),
                         description: joi.string()
                     })
@@ -71,18 +72,74 @@ const updateProductController = {
                 updatedProduct["stock"] = reqPayload?.stock;
             }
 
-            const updatedProductInDB = await global?.models?.PRODUCT?.findOneAndUpdate(
+            if (Object.entries(reqPayload)?.length === 0) {
+                return res?.status(401)?.json({
+                    errorMessage: responseErrorMessages?.NOTHING_TO_UPDATE
+                });
+            }
+
+            let toBeUpdatedImageIds = [];
+
+            reqPayload.images = reqPayload?.images?.map(img => {
+                img._id = new mongoose.Types.ObjectId(img?._id); // or mongoose.Types.ObjectId(img._id)
+                toBeUpdatedImageIds.push(img._id); // for checking conditions
+                return img;
+            });
+
+            const updatedProductInDB = await global?.models?.PRODUCT?.updateOne(
                 { _id: new mongoose.Types.ObjectId(productId) },
-                {
-                    ...updatedProduct
-                },
-                {
-                    new: true
-                }
+                [{
+                    $set: {
+                        ...reqPayload,
+                        images: {
+                            $concatArrays: [
+                                {
+                                    $map: {
+                                        input: "$images",
+                                        as: "imgs",
+                                        in: {
+                                            $cond: [
+                                                { $in: ["$$imgs._id", toBeUpdatedImageIds] },
+                                                {
+                                                    $mergeObjects: [
+                                                        "$$imgs",
+                                                        {
+                                                        $arrayElemAt: [
+                                                            {
+                                                            $filter: {
+                                                                input: reqPayload?.images,
+                                                                cond: { $eq: ["$$this._id", "$$imgs._id"] }
+                                                            }
+                                                            },
+                                                            0
+                                                        ]
+                                                        }
+                                                    ]
+                                                },
+                                                "$$imgs"
+                                            ]
+                                        }
+                                    }
+                                },
+                                {
+                                  $filter: {
+                                    input: reqPayload?.images,
+                                    cond: { $not: { $in: ["$$this._id", "$images._id"] } }
+                                  }
+                                }
+                            ]
+                        } 
+                    }
+                }],
             );
 
-            if (updatedProductInDB?._id) {
-                const responseProductDoc = updatedProductInDB?.responseDoc();
+            if (updatedProductInDB?.acknowledged) {
+                const fetchedUpdatedProductInDB = await global?.models?.PRODUCT?.findOne(
+                    { _id: new mongoose.Types.ObjectId(productId) }
+                );
+
+                const responseProductDoc = fetchedUpdatedProductInDB?.responseDoc();
+
                 return res?.status(200)?.json({
                     payload: {
                         product: responseProductDoc

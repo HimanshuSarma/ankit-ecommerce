@@ -6,6 +6,7 @@ const { createProductController } = require('../controllers/Product/createProduc
 const { updateProductController } = require('../controllers/Product/updateProduct');
 const { getProductController } = require('../controllers/Product/getProduct');
 const { getPaginatedProductsController } = require('../controllers/Product/getPaginatedProducts');
+const { getPaginatedProductsByCategoryController } = require('../controllers/Product/getPaginatedProductsByCategory');
 const { deleteProductController } = require('../controllers/Product/deleteProduct');
 const { checkPhoneNumberVerificationHandler } = require('../utils/Auth/checkPhoneNumberVerificationHandler');
 const { multerUploadImageHandler } = require('../utils/images/multerUploadFilesHandler');
@@ -53,15 +54,20 @@ productRoutes.put(`/`,
 
 // All GET routes start...
 productRoutes.get(`/`,
-    checkPhoneNumberVerificationHandler,
+    // checkPhoneNumberVerificationHandler,
     getProductController.validation,
     getProductController.handler
 );
 
 productRoutes.get(`/paginated`,
-    checkPhoneNumberVerificationHandler,
+    // checkPhoneNumberVerificationHandler,
     getPaginatedProductsController.validation,
     getPaginatedProductsController.handler
+);
+
+productRoutes.get(`/paginated/byCategory`, 
+    getPaginatedProductsByCategoryController.validation,
+    getPaginatedProductsByCategoryController.handler
 );
 // All GET routes end...
 

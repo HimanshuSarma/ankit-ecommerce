@@ -33,8 +33,9 @@ const uploadMultipleImagesFromBodyMiddleware = async (req) => {
                 return false;
             } 
             req.body.images[i] = {
+                _id: req?.body?.images?.[i]?._id,
                 url: res?.Location,
-                description: req?.body?.images?.[i]?.description
+                description: req?.body?.images?.[i]?.description,
             }
         }
 

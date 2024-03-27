@@ -13,6 +13,7 @@ const responseErrorMessages = {
     SOME_ERROR_OCCURED: `Some error occured!`,
     ERROR_UPLOADING_IMAGES: `Some error occured in uploading the images. Please try again!`,
     RESOURCE_NOT_FOUND: `The following resource was not found: `,
+    NOTHING_TO_UPDATE: `No fields to update. Please the request!`,
 
     ONLY_SUPERADMIN_ACCESS: `Only superadmins can perform this action!`,
     ONLY_ADMIN_ACCESS: `Only Admins can perform this action!`,

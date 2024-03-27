@@ -4,6 +4,7 @@ const ProductSchema = new mongoose.Schema({
     name: { type: mongoose.Schema.Types.String, required: true, unique: true },
     images: [
         {
+            _id: { type: mongoose.Schema.Types.String, required: true },
             url: { type: mongoose.Schema.Types.String, required: true },
             description: { type: mongoose.Schema.Types.String, default: '' }
         }

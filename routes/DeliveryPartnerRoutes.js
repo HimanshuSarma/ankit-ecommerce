@@ -1,9 +1,11 @@
 const express = require('express');
 
 const { createDeliveryPartnerController } = require('../controllers/DeliveryPartener/createDeliveryPartner');
+const { getPaginatedDeliveryPartnersController } = require('../controllers/DeliveryPartener/getPaginatedDeliveryPartners');
 const { sendPhoneVerificationOTPController } = require('../controllers/DeliveryPartener/sendPhoneVerificationOTP');
 
 const { verifySuperadminMiddleware } = require('../middlewares/verifySuperadminMiddleware');
+const { verifyAllAdminMiddleware } = require('../middlewares/verifyAllAdminMiddleware');
 
 const deliveryPartnerRoutes = express.Router();
 
@@ -31,6 +33,12 @@ deliveryPartnerRoutes.post(`/create`,
 deliveryPartnerRoutes.get(`/sendPhoneVerificiationOtp`, 
     sendPhoneVerificationOTPController?.validation,
     sendPhoneVerificationOTPController?.handler
+);
+
+deliveryPartnerRoutes.get(`/paginated`, 
+    verifyAllAdminMiddleware,
+    getPaginatedDeliveryPartnersController?.validation,
+    getPaginatedDeliveryPartnersController?.handler
 );
 // All GET routes end...
 
